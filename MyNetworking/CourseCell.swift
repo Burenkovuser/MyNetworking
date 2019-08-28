@@ -18,8 +18,8 @@ class CourseCell: UITableViewCell {
     // заполняем данными ячейку
     func configure(with course: Course) {
         courseNameLabel.text = course.name
-        numberOfLessons.text = "Number of lessons: \(course.number_of_lessons ?? 0)"
-        numberOfTests.text = "Number of tests: \(course.number_of_tests ?? 0)"
+        numberOfLessons.text = "Number of lessons: \(course.numberOfLessons ?? "")"
+        numberOfTests.text = "Number of tests: \(course.numberOfTests ?? "")"
         
         // в еще более глобальный поток, чтобы не жадть загрузок картинок, а таблица с текстом загрузилась
         DispatchQueue.global().async {

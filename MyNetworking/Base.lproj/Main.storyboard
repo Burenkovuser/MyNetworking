@@ -68,6 +68,8 @@
                         <segue destination="QrR-x2-5j8" kind="show" identifier="ExampleThree" id="j0b-AC-BFq"/>
                         <segue destination="QrR-x2-5j8" kind="show" identifier="ExampleFour" id="qel-4X-bu7"/>
                         <segue destination="QrR-x2-5j8" kind="show" identifier="OurCourses" id="Qfs-Kq-hzP"/>
+                        <segue destination="QrR-x2-5j8" kind="show" identifier="OurCoersesWithalamofire" id="vCD-0P-1V2"/>
+                        <segue destination="QrR-x2-5j8" kind="show" identifier="PostAlamofire" id="5fG-U3-qjH"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cac-ED-kKk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -212,6 +214,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="j0b-AC-BFq"/>
+        <segue reference="5fG-U3-qjH"/>
     </inferredMetricsTieBreakers>
 </document>

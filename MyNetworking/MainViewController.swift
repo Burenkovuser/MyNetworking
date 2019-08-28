@@ -15,6 +15,9 @@ enum UserActions: String, CaseIterable {//подписали на string что�
     case exampleThree = "Example Three"
     case exampleFour = "Example Four"
     case ourCourses = "Our Courses"
+    case postRequest = "POST Request"
+    case ourCoursesAlamofire = "Our Courses Alamofire"
+    case postAlamofire = "POST with Alamofire"
 }
 
 class MainViewController: UICollectionViewController {
@@ -62,6 +65,12 @@ class MainViewController: UICollectionViewController {
             performSegue(withIdentifier: "ExampleFour", sender: self)
         case .ourCourses:
             performSegue(withIdentifier: "OurCourses", sender: self)
+        case .postRequest:
+            posrRequest()
+        case .ourCoursesAlamofire:
+            performSegue(withIdentifier: "OurCoersesWithalamofire", sender: self)
+        case .postAlamofire:
+            performSegue(withIdentifier: "PostAlamofire", sender: self)
         }
     }
 
@@ -79,12 +88,16 @@ class MainViewController: UICollectionViewController {
                 coursesVC.fetchDataV1()
             case "ExampleTwo":
                 coursesVC.fetchDataV2()
-            case "ExampleThree":
-                coursesVC.fetchDataV3()
-            case "ExampleFour":
-                coursesVC.fetchDataV4()
+            //case "ExampleThree":
+               // coursesVC.fetchDataV3()
+            //case "ExampleFour":
+                //coursesVC.fetchDataV4()
             case "OurCourses":
                 coursesVC.fetchData()
+            case "OurCoersesWithalamofire":
+                coursesVC.fetchDataWithAlamofire()
+            case "PostAlamofire":
+                coursesVC.postWithAlamofire()
             default:
                 break
             }
@@ -99,5 +112,43 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     // в этом методе настраиваем внешний вид ячейчки
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.width - 48, height: 100)
+    }
+}
+
+extension MainViewController {
+    private func posrRequest() {
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else {
+            return
+        }
+        //создаем словарь, который будем добавлять на сервер
+        let userData = [
+            "courese" : "Networking",
+            "lesson" : "GET  and POST"
+        ]
+        
+        // создаем запрос на сервер
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        //правила добавления метода на сервер application/json берем из консоли "Content-Type" =     ("application/json; charset=utf-8"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // создаем из словаря json
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: userData, options: []) else { return }
+        // передаем json в запрос к серверу
+        request.httpBody = httpBody
+        
+        URLSession.shared.dataTask(with: request) { (data, response, _) in
+            guard let response = response, let data = data else { return }
+            
+            print(response)
+            
+            do {
+               let json = try JSONSerialization.jsonObject(with: data, options: [])
+                print(json)
+            } catch let error {
+                print(error)
+            }
+            
+        }.resume()
     }
 }
